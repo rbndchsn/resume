@@ -50,6 +50,8 @@ try { if (localStorage.getItem("theme") === "dark") document.documentElement.set
   --accent-bright: #14A396;
   --shimmer: #35E0CC;
   --gold: #9A7A22;
+  --blue: #3E6FA6;
+  --violet: #7B5EA7;
   --accent-soft: rgba(15, 118, 110, 0.08);
   --accent-glow: rgba(15, 118, 110, 0.10);
   --rule: #DDD5C3;
@@ -70,6 +72,8 @@ try { if (localStorage.getItem("theme") === "dark") document.documentElement.set
     --accent-bright: #7FE8DA;
     --shimmer: #B8FFF2;
     --gold: #D9B45C;
+    --blue: #7FA9D9;
+    --violet: #B49BD9;
     --accent-soft: rgba(63, 189, 174, 0.1);
     --accent-glow: rgba(63, 189, 174, 0.13);
     --rule: #3A3731;
@@ -408,14 +412,18 @@ ul > li:hover::before { transform: translateX(3px); }
 }
 
 /* ---------- Technical chips ---------- */
-.tech-group { margin-bottom: 1.05rem; }
+/* Each group carries its own hue; chips and labels tint from it subtly */
+.tech-group { --ghue: var(--accent); margin-bottom: 1.05rem; }
+#technical .tech-group:nth-of-type(2) { --ghue: var(--blue); }
+#technical .tech-group:nth-of-type(3) { --ghue: var(--violet); }
+#technical .tech-group:nth-of-type(4) { --ghue: var(--gold); }
 .tech-group .group-label {
   display: block;
   font-size: 0.78rem;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: var(--muted);
+  color: color-mix(in srgb, var(--ghue) 45%, var(--muted));
   margin-bottom: 0.45rem;
 }
 .chips { display: flex; flex-wrap: wrap; gap: 0.4rem; }
@@ -423,14 +431,14 @@ ul > li:hover::before { transform: translateX(3px); }
   font-size: 0.83rem;
   padding: 0.22em 0.7em;
   border-radius: 99px;
-  border: 1px solid var(--rule);
-  background: var(--surface);
+  border: 1px solid color-mix(in srgb, var(--ghue) 26%, var(--rule));
+  background: color-mix(in srgb, var(--ghue) 5%, var(--surface));
   transition: border-color 0.15s ease, background 0.15s ease, transform 0.15s ease, color 0.15s ease;
 }
 .chip:hover {
-  border-color: var(--accent);
-  background: var(--accent-soft);
-  color: var(--accent-strong);
+  border-color: var(--ghue);
+  background: color-mix(in srgb, var(--ghue) 12%, var(--surface));
+  color: color-mix(in srgb, var(--ghue) 70%, var(--text));
   transform: translateY(-1px);
 }
 
