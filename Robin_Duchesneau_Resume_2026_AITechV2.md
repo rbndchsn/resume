@@ -76,6 +76,7 @@ Founded and ran an independent practice delivering carbon accounting and decarbo
 - Architected and built the multi-tenant ESG compliance platform, the document ingestion pipeline converting regulatory PDFs into structured requirement registers at scale, and the governed retrieval portals above.
 - Applied LLMs, retrieval-augmented generation, and BERT-family models to codify regulatory logic into operational tools, governed so models classify and retrieve rather than generate answers.
 - Delivered corporate carbon accounting and decarbonization strategy from GHG inventories and Scope 3 value chain analysis.
+- Contracted by Nibbana, an Israeli agri-carbon platform backed by Granot Group and Commodex, to deliver life cycle assessment and product carbon footprint work for agricultural GHG reduction programs.
 - Integrated quality and knowledge management systems to build institutional memory that survives turnover.
 
 ## Associate Director, Corporate Carbon Accounting — Anthesis
