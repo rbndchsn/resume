@@ -160,27 +160,6 @@ a:hover {
 .contact-line .sep { margin: 0 0.45em; opacity: 0.5; }
 .contact-line a { color: var(--accent); }
 
-.pdf-button {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5em;
-  background: var(--accent);
-  color: var(--bg);
-  font-weight: 600;
-  font-size: 0.95rem;
-  padding: 0.6em 1.2em;
-  border-radius: 8px;
-  text-decoration: none;
-  transition: background 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
-}
-.pdf-button:hover {
-  background: var(--accent-strong);
-  color: var(--bg);
-  transform: translateY(-1px);
-  box-shadow: var(--shadow);
-}
-.pdf-button svg { width: 1em; height: 1em; }
-
 /* ---------- Stats band ---------- */
 .stats {
   display: grid;
@@ -575,7 +554,7 @@ footer {
 
 /* ---------- Print ---------- */
 @media print {
-  .topbar, .pdf-button, .theme-toggle { display: none !important; }
+  .topbar, .theme-toggle { display: none !important; }
   body { background: #fff; color: #000; font-size: 11pt; }
   .page { max-width: none; padding: 0; background: #fff; box-shadow: none; }
   .reveal { opacity: 1 !important; transform: none !important; }
@@ -633,10 +612,6 @@ footer {
   <p class="contact-line">
     Pea Ridge, AR<span class="sep">·</span><a href="https://www.linkedin.com/in/robin-duchesneau" target="_blank" rel="noopener">LinkedIn</a><span class="sep">·</span>Fluent in English and French<span class="sep">·</span>Contact details in the PDF
   </p>
-  <a class="pdf-button" href="Robin_Duchesneau_Resume_2026_AITech_v2.pdf" download>
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-    Download PDF
-  </a>
   <div class="stats" role="list">
     <div class="stat" role="listitem"><span class="num" data-target="20">20</span><span class="label">Years in the field</span></div>
     <div class="stat" role="listitem"><span class="num" data-target="6">6</span><span class="label">AI-assisted systems shipped</span></div>
@@ -704,7 +679,7 @@ footer {
   <h2><span class="txt">How I Build with AI</span></h2>
   <ul>
     <li><strong>Spec first.</strong> Brief → PRD with success criteria and kill triggers → architecture as the contract the PRD must satisfy → epics and stories → implementation. Method-literate (<a href="https://github.com/bmad-code-org/bmad-method" target="_blank" rel="noopener">BMAD</a>, spec-driven development, agentic workflows), not method-dependent.</li>
-    <li><strong>Two-model build loop.</strong> One Claude Code instance implements; a second oversees, issues prompts, and receives reports; I adjudicate.</li>
+    <li><strong>Multi-model build loop.</strong> One LLM implements and writes the code (a Claude Code instance, for example); an independent second model oversees, issues prompts, and receives reports; I adjudicate. The pattern scales: additional frontier models can join as a council that debates and resolves disagreements.</li>
     <li><strong>Quality control at every step.</strong> Predetermined checks run by an agent after each implementation step, so a failure localises to a stage.</li>
     <li><strong>Evals before code.</strong> Eval criteria are written into the PRD before implementation: recall and precision targets, zero fabricated citations, explicit acceptance thresholds. They run as regression eval suites against ground truth (a reference implementation or the source document), so every change is re-verified, and any LLM-as-judge pass is scoped and calibrated before it counts.</li>
     <li><strong>Independent verification of extractions.</strong> When AI extracts content that becomes source of truth, a different model checks every sentence against the source and returns found / not found / mismatch / interpretation with counts, a precision signal and a hallucination ceiling, before human review.</li>

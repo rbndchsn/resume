@@ -52,7 +52,7 @@ Outside the domain, to prove the method travels. Full FRS5 rules engine as pure 
 # How I Build with AI
 
 - **Spec first.** Brief → PRD with success criteria and kill triggers → architecture as the contract the PRD must satisfy → epics and stories → implementation. Method-literate (BMAD, spec-driven development, agentic workflows), not method-dependent.
-- **Two-model build loop.** One Claude Code instance implements; a second oversees, issues prompts, and receives reports; I adjudicate.
+- **Multi-model build loop.** One LLM implements and writes the code (a Claude Code instance, for example); an independent second model oversees, issues prompts, and receives reports; I adjudicate. The pattern scales: additional frontier models can join as a council that debates and resolves disagreements.
 - **Quality control at every step.** Predetermined checks run by an agent after each implementation step, so a failure localises to a stage.
 - **Independent verification of extractions.** When AI extracts content that becomes source of truth, a different model checks every sentence against the source and returns found / not found / mismatch / interpretation with counts — a precision signal and a hallucination ceiling — before human review.
 - **Threshold QA and human accountability.** End-of-pipeline acceptance against an explicit threshold set up front; a human makes the final assessment, with tooling routing that human to uncertain cases and a sample of the rest. Earlier R&D used SBERT similarity with a 0.75 threshold to flag likely non-compliance for human assessment, and established where similarity stops being truth.
