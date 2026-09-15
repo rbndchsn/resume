@@ -775,7 +775,7 @@ footer {
   <h2><span class="txt">Technical</span></h2>
   <div class="tech-group">
     <span class="group-label">Languages and frameworks</span>
-    <div class="chips"><span class="chip">Python</span><span class="chip">SQL</span><span class="chip">SQLite</span><span class="chip">TypeScript</span><span class="chip">JavaScript</span><span class="chip">React</span><span class="chip">Hono</span></div>
+    <div class="chips"><span class="chip">Python</span><span class="chip">SQL</span><span class="chip">SQLite</span><span class="chip">PostgreSQL</span><span class="chip">TypeScript</span><span class="chip">JavaScript</span><span class="chip">React</span><span class="chip">Hono</span></div>
   </div>
   <div class="tech-group">
     <span class="group-label">Infrastructure</span>
@@ -799,7 +799,7 @@ footer {
 </section>
 
 <footer>
-  Robin Duchesneau · <a href="Robin_Duchesneau_Resume_2026_AITech_v2.pdf" download>Download PDF version</a>
+  Robin Duchesneau · <a href="Robin_Duchesneau_Resume_2026_AITech_v2.pdf" download>Download PDF version</a><span id="visits-wrap" hidden> · <span id="visits"></span> visits</span>
 </footer>
 
 </div>
@@ -909,6 +909,23 @@ footer {
     statObs.observe(document.querySelector(".stats"));
     window.addEventListener("beforeprint", setFinal);
   }
+
+  /* ----- Footer visit counter (GoatCounter public JSON endpoint) ----- */
+  (function () {
+    var el = document.getElementById("visits");
+    if (!el || !window.fetch) return;
+    function tryPath(p) {
+      return fetch("https://rbndchsn.goatcounter.com/counter/" + encodeURIComponent(p) + ".json")
+        .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); });
+    }
+    tryPath("/resume/")
+      .catch(function () { return tryPath("/resume"); })
+      .then(function (d) {
+        el.textContent = String(d.count).trim();
+        document.getElementById("visits-wrap").hidden = false;
+      })
+      .catch(function () {});
+  })();
 
   /* ----- Cursor spotlight on build cards ----- */
   document.querySelectorAll(".build").forEach(function (card) {
