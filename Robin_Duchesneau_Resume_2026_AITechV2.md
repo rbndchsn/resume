@@ -66,7 +66,6 @@ Recruited to stand up and lead a product sustainability practice from nothing, o
 
 - Own service design, market positioning, go-to-market, and pipeline: build and manage the client pipeline in HubSpot, pitch alongside sales, coordinate outreach, prepare client materials, represent the firm at conferences.
 - Lead product sustainability consulting and verification: Product Carbon Footprint, Extended Producer Responsibility, Environmental Product Declarations, life cycle assessment, supplier-specific emission factors, value chain interventions, supplier engagement.
-- Build AI-enabled, full-stack tools that codify regulatory logic and institutional knowledge into repeatable delivery.
 - Translate regulatory and market analysis into service innovation for clients in a compliance-driven market; partner with marketing to turn technical content into positioning.
 
 ## Director of Sustainability and Innovation — Sustainable IQ
