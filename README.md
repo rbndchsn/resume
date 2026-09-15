@@ -4,7 +4,7 @@ Live at **[rbndchsn.github.io/resume](https://rbndchsn.github.io/resume/)**, wit
 
 ## What this is
 
-The online resume of Robin Duchesneau: 20+ years across environmental standards authorship, certification and audit practice, sustainability consulting, and AI-enabled software for regulated domains.
+The online resume of Robin Duchesneau: 20 years across environmental standards authorship, certification and audit practice, sustainability consulting, and AI-enabled software for regulated domains.
 
 ## How it was built
 
