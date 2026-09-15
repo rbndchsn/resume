@@ -38,9 +38,9 @@ try { if (localStorage.getItem("theme") === "dark") document.documentElement.set
 </script>
 <style>
 :root {
-  --bg: #DCD3BE;
+  --bg: #E5DECD;
   --sheet: #EDE8DD;
-  --sheet-shadow: 0 0 48px rgba(75, 62, 38, 0.22);
+  --sheet-shadow: 0 0 36px rgba(75, 62, 38, 0.13);
   --surface: #FAF7F0;
   --surface-alt: #F3EDE1;
   --text: #2B2A27;
@@ -57,9 +57,9 @@ try { if (localStorage.getItem("theme") === "dark") document.documentElement.set
   color-scheme: light;
 }
 :root[data-theme="dark"] {
-    --bg: #0E0D0C;
+    --bg: #131210;
     --sheet: #1A1916;
-    --sheet-shadow: 0 0 48px rgba(0, 0, 0, 0.65);
+    --sheet-shadow: 0 0 36px rgba(0, 0, 0, 0.4);
     --surface: #242320;
     --surface-alt: #1E1D1A;
     --text: #E9E5DC;
@@ -667,7 +667,7 @@ footer {
 
   <div class="build entry">
     <h3>Second Brain: local-first agentic RAG for technical standards <span class="badge private">Private</span></h3>
-    <p>Dual-path retrieval (semantic plus keyword/metadata) with transparency on completeness (the user always knows whether they saw 5 of 5 or 5 of 500) and a keyword-only mode that gives recall by construction when exhaustiveness is required. Eval criteria set in the PRD before build: 100% recall on metadata-filter queries, top-5 semantic relevance ≥80% on a test query set, zero fabricated citations. Trust boundary between deterministic extraction metadata and LLM enrichment; dual-write storage with rollback; consent gate before any outbound call. Delivered from a BMAD PRD with SMART success criteria, kill/pivot triggers, and a traceability matrix.</p>
+    <p>Dual-path retrieval (semantic plus keyword/metadata) with transparency on completeness (the user always knows whether they saw 5 of 5 or 5 of 500) and a keyword-only mode that gives recall by construction when exhaustiveness is required. Eval criteria set in the PRD before build: 100% recall on metadata-filter queries, top-5 semantic relevance ≥80% on a test query set, zero fabricated citations. Trust boundary between deterministic extraction metadata and LLM enrichment; dual-write storage with rollback; consent gate before any outbound call. Delivered from a <a href="https://github.com/bmad-code-org/bmad-method" target="_blank" rel="noopener">BMAD</a> PRD with SMART success criteria, kill/pivot triggers, and a traceability matrix.</p>
   </div>
 
   <div class="build entry">
@@ -679,7 +679,7 @@ footer {
 <section id="method">
   <h2><span class="txt">How I Build with AI</span></h2>
   <ul>
-    <li><strong>Spec first.</strong> Brief → PRD with success criteria and kill triggers → architecture as the contract the PRD must satisfy → epics and stories → implementation. Method-literate (BMAD, spec-driven development, agentic workflows), not method-dependent.</li>
+    <li><strong>Spec first.</strong> Brief → PRD with success criteria and kill triggers → architecture as the contract the PRD must satisfy → epics and stories → implementation. Method-literate (<a href="https://github.com/bmad-code-org/bmad-method" target="_blank" rel="noopener">BMAD</a>, spec-driven development, agentic workflows), not method-dependent.</li>
     <li><strong>Two-model build loop.</strong> One Claude Code instance implements; a second oversees, issues prompts, and receives reports; I adjudicate.</li>
     <li><strong>Quality control at every step.</strong> Predetermined checks run by an agent after each implementation step, so a failure localises to a stage.</li>
     <li><strong>Evals before code.</strong> Eval criteria are written into the PRD before implementation: recall and precision targets, zero fabricated citations, explicit acceptance thresholds. They run as regression eval suites against ground truth (a reference implementation or the source document), so every change is re-verified, and any LLM-as-judge pass is scoped and calibrated before it counts.</li>
