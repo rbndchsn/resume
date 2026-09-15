@@ -43,9 +43,12 @@
   --muted: #6E6960;
   --accent: #0F766E;
   --accent-strong: #0A5A54;
+  --accent-bright: #14A396;
   --accent-soft: rgba(15, 118, 110, 0.08);
+  --accent-glow: rgba(15, 118, 110, 0.10);
   --rule: #E6E0D4;
   --shadow: 0 6px 20px rgba(60, 50, 30, 0.08);
+  --shadow-lift: 0 10px 30px rgba(60, 50, 30, 0.12);
   color-scheme: light dark;
 }
 @media (prefers-color-scheme: dark) {
@@ -56,9 +59,12 @@
     --muted: #A6A094;
     --accent: #3FBDAE;
     --accent-strong: #6ADACB;
+    --accent-bright: #7FE8DA;
     --accent-soft: rgba(63, 189, 174, 0.1);
+    --accent-glow: rgba(63, 189, 174, 0.13);
     --rule: #3A3731;
     --shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+    --shadow-lift: 0 10px 30px rgba(0, 0, 0, 0.45);
   }
 }
 
@@ -78,6 +84,7 @@ body {
   max-width: 800px;
   margin: 0 auto;
   padding: 3rem 20px 4rem;
+  counter-reset: sec;
 }
 
 /* ---------- Links ---------- */
@@ -94,13 +101,6 @@ a:hover {
 }
 
 /* ---------- Header ---------- */
-.masthead h1 {
-  font-family: "Source Serif 4", Georgia, serif;
-  font-size: clamp(2rem, 6vw, 2.75rem);
-  font-weight: 700;
-  line-height: 1.15;
-  margin: 0 0 0.35rem;
-}
 .masthead .eyebrow {
   font-size: 0.78rem;
   font-weight: 700;
@@ -108,6 +108,13 @@ a:hover {
   letter-spacing: 0.18em;
   color: var(--accent);
   margin: 0 0 0.5rem;
+}
+.masthead h1 {
+  font-family: "Source Serif 4", Georgia, serif;
+  font-size: clamp(2rem, 6vw, 2.75rem);
+  font-weight: 700;
+  line-height: 1.15;
+  margin: 0 0 0.6rem;
 }
 .contact-line {
   font-size: 0.92rem;
@@ -138,10 +145,41 @@ a:hover {
 }
 .pdf-button svg { width: 1em; height: 1em; }
 
+/* ---------- Stats band ---------- */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  margin-top: 1.8rem;
+  padding: 1.1rem 0.4rem;
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+}
+.stat .num {
+  display: block;
+  font-family: "Source Serif 4", Georgia, serif;
+  font-size: clamp(1.5rem, 4.5vw, 2.1rem);
+  font-weight: 700;
+  color: var(--accent);
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;
+}
+.stat .label {
+  display: block;
+  font-size: 0.76rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+  margin-top: 0.25rem;
+}
+@media (max-width: 560px) {
+  .stats { grid-template-columns: repeat(2, 1fr); row-gap: 1.2rem; }
+}
+
 /* ---------- Sections ---------- */
 section {
-  margin-top: 2.6rem;
-  padding: 0.25rem 1.1rem 0.25rem 1.25rem;
+  margin-top: 2.8rem;
+  padding: 0.25rem 1.1rem 0.35rem 1.25rem;
   border-left: 3px solid transparent;
   border-radius: 6px;
   transition: border-color 0.18s ease, background 0.18s ease, box-shadow 0.18s ease;
@@ -152,21 +190,118 @@ section:hover {
   background: var(--surface);
   box-shadow: var(--shadow);
 }
+
+/* Numbered headers with shimmer + self-drawing rule */
 h2 {
   font-family: "Source Serif 4", Georgia, serif;
-  font-size: 1.45rem;
+  font-size: 1.5rem;
   font-weight: 700;
-  margin: 0 0 0.9rem;
-  padding-bottom: 0.4rem;
-  border-bottom: 1px solid var(--rule);
+  margin: 0 0 1rem;
+  padding-bottom: 0.45rem;
+  position: relative;
+  display: flex;
+  align-items: baseline;
+  gap: 0.55rem;
 }
+h2::before {
+  counter-increment: sec;
+  content: counter(sec, decimal-leading-zero);
+  font-size: 1.9rem;
+  font-weight: 700;
+  color: var(--accent);
+  opacity: 0.22;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  transition: opacity 0.25s ease;
+}
+section:hover h2::before { opacity: 0.55; }
+h2::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, var(--accent) 0%, var(--accent-bright) 35%, var(--rule) 80%);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+section.inview h2::after { transform: scaleX(1); }
+h2 .txt {
+  background: linear-gradient(110deg,
+    var(--text) 0%, var(--text) 38%,
+    var(--accent-bright) 50%,
+    var(--text) 62%, var(--text) 100%);
+  background-size: 260% 100%;
+  background-position: 130% 0;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+@keyframes shimmer {
+  from { background-position: 130% 0; }
+  to   { background-position: -130% 0; }
+}
+section:hover h2 .txt { animation: shimmer 0.9s ease; }
+
 p { margin: 0 0 0.9rem; }
-ul { margin: 0 0 0.9rem; padding-left: 1.2rem; }
-li { margin-bottom: 0.45rem; }
-li::marker { color: var(--accent); }
+
+/* ---------- Bullets: arrow markers + focus dimming ---------- */
+ul { margin: 0 0 0.9rem; padding-left: 0; list-style: none; }
+ul li {
+  position: relative;
+  padding-left: 1.15rem;
+  margin-bottom: 0.45rem;
+  transition: opacity 0.2s ease;
+}
+ul li::before {
+  content: "▸";
+  position: absolute;
+  left: 0;
+  color: var(--accent);
+  transition: transform 0.18s ease;
+}
+ul:hover > li { opacity: 0.55; }
+ul:hover > li:hover { opacity: 1; }
+ul > li:hover::before { transform: translateX(3px); }
+
+/* ---------- Experience timeline ---------- */
+.timeline { position: relative; padding-left: 1.9rem; }
+.timeline::before {
+  content: "";
+  position: absolute;
+  left: 0.45rem;
+  top: 8px;
+  bottom: 8px;
+  width: 2px;
+  background: linear-gradient(180deg, var(--accent) 0%, color-mix(in srgb, var(--accent) 40%, var(--rule)) 60%, var(--rule) 100%);
+  border-radius: 2px;
+}
+.timeline .entry { position: relative; }
+.timeline .entry::before {
+  content: "";
+  position: absolute;
+  left: calc(-1.9rem + 0.45rem + 1px - 6px);
+  top: 7px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 2px solid var(--accent);
+  background: var(--bg);
+  transition: background 0.35s ease, box-shadow 0.35s ease, transform 0.35s ease;
+}
+.timeline .entry.inview::before {
+  background: var(--accent);
+  box-shadow: 0 0 0 5px var(--accent-soft);
+}
+.timeline .entry:hover::before {
+  transform: scale(1.25);
+  box-shadow: 0 0 0 7px var(--accent-soft);
+}
 
 /* ---------- Jobs & builds ---------- */
-.entry { margin-bottom: 1.6rem; }
+.entry { margin-bottom: 1.7rem; }
 .entry:last-child { margin-bottom: 0.5rem; }
 .entry h3 {
   font-size: 1.08rem;
@@ -196,22 +331,104 @@ li::marker { color: var(--accent); }
 }
 .entry .lede { margin-bottom: 0.55rem; }
 
-.build { margin-bottom: 1.35rem; }
+/* Build cards with cursor spotlight */
+.build {
+  position: relative;
+  overflow: hidden;
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: 12px;
+  padding: 1.05rem 1.2rem 1.1rem;
+  margin-bottom: 1rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+.build:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lift);
+  border-color: color-mix(in srgb, var(--accent) 45%, var(--rule));
+}
+.build::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(260px circle at var(--mx, 50%) var(--my, 50%), var(--accent-glow), transparent 65%);
+  opacity: 0;
+  transition: opacity 0.25s ease;
+  pointer-events: none;
+}
+.build:hover::before { opacity: 1; }
 .build h3 {
   font-size: 1.02rem;
   font-weight: 700;
-  margin: 0 0 0.25rem;
+  margin: 0 0 0.35rem;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
 }
-.build p { margin: 0; font-size: 0.96rem; }
+.build p { margin: 0; font-size: 0.95rem; position: relative; }
+.badge {
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  padding: 0.18em 0.6em;
+  border-radius: 99px;
+  white-space: nowrap;
+}
+.badge.live { background: var(--accent-soft); color: var(--accent-strong); border: 1px solid color-mix(in srgb, var(--accent) 35%, transparent); }
+.badge.private { background: transparent; color: var(--muted); border: 1px solid var(--rule); }
 .builds-note {
   font-size: 0.92rem;
   font-style: italic;
   color: var(--muted);
 }
 
-/* ---------- Technical ---------- */
-.tech-group { margin-bottom: 0.7rem; font-size: 0.96rem; }
-.tech-group strong { color: var(--text); }
+/* ---------- Technical chips ---------- */
+.tech-group { margin-bottom: 1.05rem; }
+.tech-group .group-label {
+  display: block;
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  margin-bottom: 0.45rem;
+}
+.chips { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+.chip {
+  font-size: 0.83rem;
+  padding: 0.22em 0.7em;
+  border-radius: 99px;
+  border: 1px solid var(--rule);
+  background: var(--surface);
+  transition: border-color 0.15s ease, background 0.15s ease, transform 0.15s ease, color 0.15s ease;
+}
+.chip:hover {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+  color: var(--accent-strong);
+  transform: translateY(-1px);
+}
+
+/* ---------- Scroll reveal (JS adds .reveal; section .inview shows) ---------- */
+@media (prefers-reduced-motion: no-preference) {
+  body.js .reveal {
+    opacity: 0;
+    transform: translateY(14px);
+    transition: opacity 0.45s ease, transform 0.45s ease;
+    transition-delay: var(--d, 0s);
+  }
+  body.js .inview .reveal,
+  body.js .reveal.inview {
+    opacity: 1;
+    transform: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  section:hover h2 .txt { animation: none; }
+}
 
 /* ---------- Hamburger nav ---------- */
 .nav-toggle {
@@ -268,7 +485,9 @@ body.nav-open .nav-toggle .bars::after { opacity: 0; }
 }
 body.nav-open .nav-panel { transform: translateX(0); }
 .nav-panel ul { list-style: none; margin: 0; padding: 0; }
-.nav-panel li { margin: 0; }
+.nav-panel li { margin: 0; padding: 0; }
+.nav-panel li::before { content: none; }
+.nav-panel ul:hover > li { opacity: 1; }
 .nav-panel a {
   display: block;
   padding: 0.55em 0.7em;
@@ -318,17 +537,32 @@ footer {
   .nav-toggle, .nav-panel, .nav-backdrop, .pdf-button { display: none !important; }
   body { background: #fff; color: #000; font-size: 11pt; }
   .page { max-width: none; padding: 0; }
+  .reveal { opacity: 1 !important; transform: none !important; }
   section { border: none; padding: 0; box-shadow: none; background: none; margin-top: 1.4rem; }
   section:hover { box-shadow: none; background: none; }
-  h2 { border-bottom-color: #999; }
+  h2 { display: block; }
+  h2::before { content: none; }
+  h2::after { transform: scaleX(1); background: #999; }
+  h2 .txt { background: none; color: #000; -webkit-text-fill-color: #000; }
+  .stats { border-color: #ccc; }
+  .stat .num { color: #000; }
+  .timeline { padding-left: 0; }
+  .timeline::before, .timeline .entry::before { display: none; }
+  .build { border-color: #ccc; background: none; box-shadow: none; transform: none; }
+  .build::before { content: none; }
+  .chip { border-color: #bbb; background: none; color: #000; }
   a { color: #000; text-decoration: none; }
   .entry, .build { break-inside: avoid; }
+  ul li::before { color: #000; }
+  ul:hover > li { opacity: 1; }
 }
 
 @media (max-width: 480px) {
   .page { padding-top: 2rem; }
   section { padding-left: 0.9rem; padding-right: 0.7rem; }
   .masthead { padding-right: 3.2rem; }
+  .timeline { padding-left: 1.5rem; }
+  .timeline .entry::before { left: calc(-1.5rem + 0.45rem + 1px - 6px); }
 }
 </style>
 </head>
@@ -365,16 +599,22 @@ footer {
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
     Download PDF
   </a>
+  <div class="stats" role="list">
+    <div class="stat" role="listitem"><span class="num" data-target="25">25</span><span class="label">Years in the field</span></div>
+    <div class="stat" role="listitem"><span class="num" data-target="6">6</span><span class="label">Systems shipped</span></div>
+    <div class="stat" role="listitem"><span class="num" data-target="2" data-prefix="$" data-suffix="M">$2M</span><span class="label">Engagements won</span></div>
+    <div class="stat" role="listitem"><span class="num" data-target="20" data-suffix="+">20+</span><span class="label">Team members led</span></div>
+  </div>
 </header>
 
 <section id="profile">
-  <h2>Profile</h2>
+  <h2><span class="txt">Profile</span></h2>
   <p>Twenty-five years turning environmental science and regulation into working systems, on every side of the field: writing the standards, certifying against them, advising the multinationals that must meet them, and now building the AI-enabled software that codifies them. Has stood up two practices from nothing and owned the quality bar for a third, led pursuit teams that won roughly $2M in engagements, and closed six-figure engagements from personal executive relationships.</p>
   <p>Builds AI systems for regulated domains, anywhere the deliverable has to survive an auditor, a regulator, or a board. Sustainability and ESG disclosure is where the proof is live; the discipline transfers to any domain where the source of truth is a document with legal weight. Six systems shipped end to end under a repeatable method: brief, PRD with success and kill criteria, architecture, agentic build with quality control at every step, independent-model verification, and a human accountable for the final assessment. Model-agnostic by design: Claude Code, an agentic coding tool that reads the codebase, edits files, runs commands, and connects to external tools, drives the build from terminal and IDE, with a second instance overseeing the first; frontier LLMs handle extraction and judging, a different model always verifying the one that did the work; open-source models run locally (Llama via Ollama, Nomic, BERT/SBERT) where data sovereignty requires it. Builds multi-agent pipelines as products, not only as tooling: orchestrator, sub-agents, and verifier with resumable state.</p>
 </section>
 
 <section id="record">
-  <h2>Executive, Commercial, and Delivery Record</h2>
+  <h2><span class="txt">Executive, Commercial, and Delivery Record</span></h2>
   <ul>
     <li><strong>Executive trust.</strong> Advised ISEAL, Better Cotton, H&amp;M, and Adidas on value-chain and chain-of-custody design; delivered Net Zero and disclosure strategy to Fortune 500 and mid-market leadership at Anthesis; recruited by Apex to build a practice from a standing start.</li>
     <li><strong>Revenue.</strong> Led pursuit teams at Anthesis that won roughly $2M in engagements; separately closed two six-figure engagements sourced from own executive relationships; currently own go-to-market, pipeline, and client pitching for a new service line at Apex.</li>
@@ -385,42 +625,42 @@ footer {
 </section>
 
 <section id="builds">
-  <h2>Selected Builds</h2>
+  <h2><span class="txt">Selected Builds</span></h2>
   <p class="builds-note">All AI-assisted up front; none rely on an LLM generating answers to users at runtime.</p>
 
   <div class="build entry">
-    <h3><a href="https://compliance-saas.pages.dev/public/ghg-land" target="_blank" rel="noopener">Multi-tenant ESG compliance platform</a> <span style="font-weight:400">(research prototype)</span></h3>
+    <h3><a href="https://compliance-saas.pages.dev/public/ghg-land" target="_blank" rel="noopener">Multi-tenant ESG compliance platform</a> <span class="badge live">Live ↗</span></h3>
     <p>Built to test how far AI assistance takes one practitioner from published standard to working compliance interface. Requirement registers extracted from source PDFs through a vision-transformer layout and table pipeline: IFRS S2 (1,623 requirements), CSRD (6,016), GRI, SASB, EU Taxonomy, GHG Protocol Land Sector and Removals. Extractions verified by an independent-model grounding check (precision — found / not found / mismatch / interpretation, with counts) before human QA against a set acceptance threshold. SQLite schema, REST API on Cloudflare Workers, dual-token auth, evidence object storage, React front end.</p>
   </div>
 
   <div class="build entry">
-    <h3><a href="https://rbndchsn.github.io/sbti-cnzs-portal/" target="_blank" rel="noopener">SBTi Corporate Net-Zero Standard V2.0 portal</a></h3>
+    <h3><a href="https://rbndchsn.github.io/sbti-cnzs-portal/" target="_blank" rel="noopener">SBTi Corporate Net-Zero Standard V2.0 portal</a> <span class="badge live">Live ↗</span></h3>
     <p>Governed Answer Retrieval: every answer traces to the clause it came from and is served verbatim. Content human-graded and approved before serving (100% human eval as the release gate); clause-level grounding makes citation accuracy deterministic. No generation surface in front of the user.</p>
   </div>
 
   <div class="build entry">
-    <h3><a href="https://rbndchsn.github.io/sb_portal/" target="_blank" rel="noopener">California SB 54 Compliance Navigator</a></h3>
+    <h3><a href="https://rbndchsn.github.io/sb_portal/" target="_blank" rel="noopener">California SB 54 Compliance Navigator</a> <span class="badge live">Live ↗</span></h3>
     <p>Statute and regulations classified into a structured requirement register. Python content factory, generated JSON, deploy gated on deterministic validation checks (schema and content graders) so a failed check leaves the last good version serving.</p>
   </div>
 
   <div class="build entry">
-    <h3>DocReview — multi-agent document analysis pipeline <span style="font-weight:400">(not public)</span></h3>
+    <h3>DocReview — multi-agent document analysis pipeline <span class="badge private">Private</span></h3>
     <p>Orchestrator with resumable state, corpus manifest, and schema versioned in Git. Seven rubric modes including asymmetric critical review against authoritative references. Every finding carries a support level (dimensional scoring: explicit / inferred / uncertain / missing), never a collapsed numeric score; uncertain or conflicting findings are routed to a verifier pass (scoped LLM-as-judge). Rubric calibrated on two documents before any corpus run.</p>
   </div>
 
   <div class="build entry">
-    <h3>Second Brain — local-first agentic RAG for technical standards <span style="font-weight:400">(not public)</span></h3>
+    <h3>Second Brain — local-first agentic RAG for technical standards <span class="badge private">Private</span></h3>
     <p>Dual-path retrieval (semantic plus keyword/metadata) with transparency on completeness — the user always knows whether they saw 5 of 5 or 5 of 500 — and a keyword-only mode that gives recall by construction when exhaustiveness is required. Eval criteria set in the PRD before build: 100% recall on metadata-filter queries, top-5 semantic relevance ≥80% on a test query set, zero fabricated citations. Trust boundary between deterministic extraction metadata and LLM enrichment; dual-write storage with rollback; consent gate before any outbound call. Delivered from a BMAD PRD with SMART success criteria, kill/pivot triggers, and a traceability matrix.</p>
   </div>
 
   <div class="build entry">
-    <h3><a href="https://sustainable-iq.github.io/tri-d-chess/" target="_blank" rel="noopener">Star Trek Tri-Dimensional Chess</a></h3>
+    <h3><a href="https://sustainable-iq.github.io/tri-d-chess/" target="_blank" rel="noopener">Star Trek Tri-Dimensional Chess</a> <span class="badge live">Live ↗</span></h3>
     <p>Outside the domain, to prove the method travels. Full FRS5 rules engine as pure TypeScript with engine/rendering separation; 3D WebGL board; in-browser alpha-beta/PVS opponent with transposition table and quiescence, running in a Web Worker. Evals built against a reference implementation adopted as oracle (gold-standard ground truth): replay of the annotated sample game (recall — every legal move accepted) plus per-position differential checks submitting every generated move to the validator (precision — no over-generation), run as a regression eval suite; deviations from the reference documented and cited.</p>
   </div>
 </section>
 
 <section id="method">
-  <h2>How I Build with AI</h2>
+  <h2><span class="txt">How I Build with AI</span></h2>
   <ul>
     <li><strong>Spec first.</strong> Brief → PRD with success criteria and kill triggers → architecture as the contract the PRD must satisfy → epics and stories → implementation. Method-literate (BMAD, spec-driven development, agentic workflows), not method-dependent.</li>
     <li><strong>Two-model build loop.</strong> One Claude Code instance implements; a second oversees, issues prompts, and receives reports; I adjudicate.</li>
@@ -431,7 +671,8 @@ footer {
 </section>
 
 <section id="experience">
-  <h2>Experience</h2>
+  <h2><span class="txt">Experience</span></h2>
+  <div class="timeline">
 
   <div class="entry">
     <h3>Principal, Product Sustainability — <a href="https://www.apexcos.com" target="_blank" rel="noopener">Apex Companies</a></h3>
@@ -486,18 +727,32 @@ footer {
     <h3>Earlier career, 1999–2020</h3>
     <p class="lede" style="margin-top:0.45rem">Standards authorship (EcoLogo criteria for 300+ product categories, TerraChoice), nine years of ISO 14001, FSC, and USDA organic certification and audit practice, FSC audit leadership at Rainforest Alliance, and forest ecosystem simulation modeling as a research scientist at UBC and UQO, including climate scenario analysis for a million-dollar industry research collaboration. Details on request.</p>
   </div>
+
+  </div>
 </section>
 
 <section id="technical">
-  <h2>Technical</h2>
-  <p class="tech-group"><strong>Languages and frameworks:</strong> Python, SQL, SQLite, TypeScript, JavaScript, React, Hono</p>
-  <p class="tech-group"><strong>Infrastructure:</strong> Cloudflare Workers, Pages, R2, D1; GitHub Actions CI/CD</p>
-  <p class="tech-group"><strong>AI and data:</strong> Claude Code (agentic build, multi-instance implementer/overseer loops); frontier LLMs (Claude and others) for extraction and LLM-as-judge verification; open-source models run locally (Llama via Ollama, Nomic embeddings, BERT/SBERT); multi-agent orchestration with resumable state; RAG and governed retrieval; vision-transformer document ingestion; ChromaDB, DuckDB; schema design; ETL from unstructured regulatory text</p>
-  <p class="tech-group"><strong>Standards:</strong> GHG Protocol Corporate, Scope 3, and Land Sector and Removals; ISO 14064, 14065, 17029, 14001, 14025; SBTi; CSRD and ESRS; IFRS S2; EU Taxonomy; GRI; SASB; California SB 54 and EPR; Gold Standard; Verra; FSC; USDA NOP</p>
+  <h2><span class="txt">Technical</span></h2>
+  <div class="tech-group">
+    <span class="group-label">Languages and frameworks</span>
+    <div class="chips"><span class="chip">Python</span><span class="chip">SQL</span><span class="chip">SQLite</span><span class="chip">TypeScript</span><span class="chip">JavaScript</span><span class="chip">React</span><span class="chip">Hono</span></div>
+  </div>
+  <div class="tech-group">
+    <span class="group-label">Infrastructure</span>
+    <div class="chips"><span class="chip">Cloudflare Workers</span><span class="chip">Cloudflare Pages</span><span class="chip">R2</span><span class="chip">D1</span><span class="chip">GitHub Actions CI/CD</span></div>
+  </div>
+  <div class="tech-group">
+    <span class="group-label">AI and data</span>
+    <div class="chips"><span class="chip">Claude Code — multi-instance agentic build</span><span class="chip">Frontier LLMs — extraction &amp; LLM-as-judge</span><span class="chip">Local models — Llama/Ollama, Nomic, BERT/SBERT</span><span class="chip">Multi-agent orchestration, resumable state</span><span class="chip">RAG &amp; governed retrieval</span><span class="chip">Vision-transformer document ingestion</span><span class="chip">ChromaDB</span><span class="chip">DuckDB</span><span class="chip">Schema design</span><span class="chip">ETL from unstructured regulatory text</span></div>
+  </div>
+  <div class="tech-group">
+    <span class="group-label">Standards</span>
+    <div class="chips"><span class="chip">GHG Protocol — Corporate, Scope 3, Land Sector &amp; Removals</span><span class="chip">ISO 14064</span><span class="chip">ISO 14065</span><span class="chip">ISO 17029</span><span class="chip">ISO 14001</span><span class="chip">ISO 14025</span><span class="chip">SBTi</span><span class="chip">CSRD &amp; ESRS</span><span class="chip">IFRS S2</span><span class="chip">EU Taxonomy</span><span class="chip">GRI</span><span class="chip">SASB</span><span class="chip">California SB 54 &amp; EPR</span><span class="chip">Gold Standard</span><span class="chip">Verra</span><span class="chip">FSC</span><span class="chip">USDA NOP</span></div>
+  </div>
 </section>
 
 <section id="education">
-  <h2>Education and Certification</h2>
+  <h2><span class="txt">Education and Certification</span></h2>
   <p>M.Sc., Renewable Resources, University of Quebec in Chicoutimi, 1997<br>
   B.Sc., Biological Sciences, University of Quebec in Montreal, 1995</p>
   <p>ISO 14001 Lead Auditor (RABQSA-EM, 2011) · FSC Auditor (Rainforest Alliance, 2010) · GHG Protocol Scope 3 Standard (2020) · TCFD Climate-Related Disclosures (2022)</p>
@@ -512,6 +767,10 @@ footer {
 <script>
 (function () {
   var body = document.body;
+  body.classList.add("js");
+  var reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  /* ----- Hamburger nav ----- */
   var toggle = document.querySelector(".nav-toggle");
   var backdrop = document.querySelector(".nav-backdrop");
   var panel = document.getElementById("nav-panel");
@@ -533,13 +792,13 @@ footer {
     link.addEventListener("click", function () { setNav(false); });
   });
 
-  // Scroll-spy: highlight the section currently in view
+  /* ----- Scroll-spy ----- */
   var sections = document.querySelectorAll("section[id]");
   var byId = {};
   navLinks.forEach(function (link) {
     byId[link.getAttribute("href").slice(1)] = link;
   });
-  var observer = new IntersectionObserver(function (entries) {
+  var spy = new IntersectionObserver(function (entries) {
     entries.forEach(function (entry) {
       var link = byId[entry.target.id];
       if (!link) return;
@@ -549,7 +808,85 @@ footer {
       }
     });
   }, { rootMargin: "-25% 0px -65% 0px" });
-  sections.forEach(function (s) { observer.observe(s); });
+  sections.forEach(function (s) { spy.observe(s); });
+
+  /* ----- Scroll reveal with stagger ----- */
+  if (!reducedMotion) {
+    sections.forEach(function (section) {
+      var kids = section.querySelectorAll(
+        ":scope > p, :scope > ul > li, :scope > .build, :scope > .tech-group, :scope > .timeline > .entry"
+      );
+      kids.forEach(function (el, i) {
+        el.classList.add("reveal");
+        el.style.setProperty("--d", Math.min(i * 70, 420) + "ms");
+      });
+    });
+    var revealObs = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("inview");
+          revealObs.unobserve(entry.target);
+        }
+      });
+    }, { rootMargin: "0px 0px -10% 0px", threshold: 0.05 });
+    sections.forEach(function (s) { revealObs.observe(s); });
+
+    /* Timeline nodes light up individually */
+    var nodeObs = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("inview");
+          nodeObs.unobserve(entry.target);
+        }
+      });
+    }, { rootMargin: "0px 0px -20% 0px" });
+    document.querySelectorAll(".timeline .entry").forEach(function (e) { nodeObs.observe(e); });
+  } else {
+    sections.forEach(function (s) { s.classList.add("inview"); });
+    document.querySelectorAll(".timeline .entry").forEach(function (e) { e.classList.add("inview"); });
+  }
+
+  /* ----- Count-up stats (HTML holds final values; animate from 0) ----- */
+  var nums = document.querySelectorAll(".stat .num");
+  function fmt(el, value) {
+    return (el.dataset.prefix || "") + value + (el.dataset.suffix || "");
+  }
+  function setFinal() {
+    nums.forEach(function (el) { el.textContent = fmt(el, el.dataset.target); });
+  }
+  if (!reducedMotion && "IntersectionObserver" in window) {
+    nums.forEach(function (el) { el.textContent = fmt(el, 0); });
+    var counted = false;
+    var statObs = new IntersectionObserver(function (entries) {
+      if (counted || !entries.some(function (e) { return e.isIntersecting; })) return;
+      counted = true;
+      statObs.disconnect();
+      nums.forEach(function (el) {
+        var target = parseInt(el.dataset.target, 10);
+        var start = null;
+        var dur = 900;
+        function step(ts) {
+          if (start === null) start = ts;
+          var t = Math.min((ts - start) / dur, 1);
+          var eased = 1 - Math.pow(1 - t, 3);
+          el.textContent = fmt(el, Math.round(eased * target));
+          if (t < 1) requestAnimationFrame(step);
+        }
+        requestAnimationFrame(step);
+      });
+    }, { threshold: 0.4 });
+    statObs.observe(document.querySelector(".stats"));
+    window.addEventListener("beforeprint", setFinal);
+  }
+
+  /* ----- Cursor spotlight on build cards ----- */
+  document.querySelectorAll(".build").forEach(function (card) {
+    card.addEventListener("pointermove", function (e) {
+      var r = card.getBoundingClientRect();
+      card.style.setProperty("--mx", (e.clientX - r.left) + "px");
+      card.style.setProperty("--my", (e.clientY - r.top) + "px");
+    });
+  });
 })();
 </script>
 
