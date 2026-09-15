@@ -412,7 +412,7 @@ ul > li:hover::before { transform: translateX(3px); }
 }
 
 /* ---------- Technical chips ---------- */
-/* Each group carries its own hue; chips and labels tint from it subtly */
+/* Each group carries its own hue; chips and labels tint from it visibly */
 .tech-group { --ghue: var(--accent); margin-bottom: 1.05rem; }
 #technical .tech-group:nth-of-type(2) { --ghue: var(--blue); }
 #technical .tech-group:nth-of-type(3) { --ghue: var(--violet); }
@@ -423,7 +423,7 @@ ul > li:hover::before { transform: translateX(3px); }
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: color-mix(in srgb, var(--ghue) 45%, var(--muted));
+  color: color-mix(in srgb, var(--ghue) 70%, var(--muted));
   margin-bottom: 0.45rem;
 }
 .chips { display: flex; flex-wrap: wrap; gap: 0.4rem; }
@@ -431,8 +431,9 @@ ul > li:hover::before { transform: translateX(3px); }
   font-size: 0.83rem;
   padding: 0.22em 0.7em;
   border-radius: 99px;
-  border: 1px solid color-mix(in srgb, var(--ghue) 26%, var(--rule));
-  background: color-mix(in srgb, var(--ghue) 5%, var(--surface));
+  border: 1px solid color-mix(in srgb, var(--ghue) 50%, var(--rule));
+  background: color-mix(in srgb, var(--ghue) 11%, var(--surface));
+  color: color-mix(in srgb, var(--ghue) 32%, var(--text));
   transition: border-color 0.15s ease, background 0.15s ease, transform 0.15s ease, color 0.15s ease;
 }
 .chip:hover {
