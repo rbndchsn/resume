@@ -24,8 +24,6 @@
   "name": "Robin Duchesneau",
   "jobTitle": "Principal, Product Sustainability",
   "worksFor": { "@type": "Organization", "name": "Apex Companies", "url": "https://www.apexcos.com" },
-  "email": "mailto:rbndchsn@gmail.com",
-  "telephone": "+1-479-866-5471",
   "address": { "@type": "PostalAddress", "addressLocality": "Pea Ridge", "addressRegion": "AR", "addressCountry": "US" },
   "sameAs": ["https://www.linkedin.com/in/robin-duchesneau"],
   "knowsLanguage": ["en", "fr"],
@@ -44,6 +42,7 @@
   --accent: #0F766E;
   --accent-strong: #0A5A54;
   --accent-bright: #14A396;
+  --shimmer: #35E0CC;
   --accent-soft: rgba(15, 118, 110, 0.08);
   --accent-glow: rgba(15, 118, 110, 0.10);
   --rule: #E6E0D4;
@@ -60,6 +59,7 @@
     --accent: #3FBDAE;
     --accent-strong: #6ADACB;
     --accent-bright: #7FE8DA;
+    --shimmer: #B8FFF2;
     --accent-soft: rgba(63, 189, 174, 0.1);
     --accent-glow: rgba(63, 189, 174, 0.13);
     --rule: #3A3731;
@@ -83,8 +83,15 @@ body {
 .page {
   max-width: 800px;
   margin: 0 auto;
-  padding: 3rem 20px 4rem;
+  padding: 5.2rem 20px 4rem;
   counter-reset: sec;
+}
+@media (max-width: 759px) {
+  .topbar { display: none; }
+  .page { padding-top: 3rem; }
+}
+@media (min-width: 760px) {
+  .nav-toggle, .nav-panel, .nav-backdrop { display: none; }
 }
 
 /* ---------- Links ---------- */
@@ -230,9 +237,11 @@ h2::after {
 section.inview h2::after { transform: scaleX(1); }
 h2 .txt {
   background: linear-gradient(110deg,
-    var(--text) 0%, var(--text) 38%,
-    var(--accent-bright) 50%,
-    var(--text) 62%, var(--text) 100%);
+    var(--text) 0%, var(--text) 28%,
+    var(--accent-bright) 42%,
+    var(--shimmer) 50%,
+    var(--accent-bright) 58%,
+    var(--text) 72%, var(--text) 100%);
   background-size: 260% 100%;
   background-position: 130% 0;
   -webkit-background-clip: text;
@@ -243,7 +252,7 @@ h2 .txt {
   from { background-position: 130% 0; }
   to   { background-position: -130% 0; }
 }
-section:hover h2 .txt { animation: shimmer 0.9s ease; }
+section:hover h2 .txt { animation: shimmer 1.2s ease-in-out; }
 
 p { margin: 0 0 0.9rem; }
 
@@ -378,10 +387,11 @@ ul > li:hover::before { transform: translateX(3px); }
 }
 .badge.live { background: var(--accent-soft); color: var(--accent-strong); border: 1px solid color-mix(in srgb, var(--accent) 35%, transparent); }
 .badge.private { background: transparent; color: var(--muted); border: 1px solid var(--rule); }
-.builds-note {
-  font-size: 0.92rem;
+.build .builds-note {
+  font-size: 0.85rem;
   font-style: italic;
   color: var(--muted);
+  margin: 0 0 0.4rem;
 }
 
 /* ---------- Technical chips ---------- */
@@ -429,6 +439,78 @@ ul > li:hover::before { transform: translateX(3px); }
   html { scroll-behavior: auto; }
   section:hover h2 .txt { animation: none; }
 }
+
+/* ---------- Top bar (desktop) ---------- */
+.topbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 60;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.4rem;
+  padding: 0.55rem 1.2rem;
+  background: color-mix(in srgb, var(--bg) 82%, transparent);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--rule);
+  font-size: 0.88rem;
+}
+.topbar-name {
+  font-family: "Source Serif 4", Georgia, serif;
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--accent);
+  text-decoration: none;
+}
+.topbar ul {
+  display: flex;
+  gap: 0.2rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.topbar li { margin: 0; padding: 0; }
+.topbar li::before { content: none; }
+.topbar ul:hover > li { opacity: 1; }
+.topbar ul a {
+  display: block;
+  padding: 0.25em 0.65em;
+  border-radius: 6px;
+  color: var(--muted);
+  text-decoration: none;
+  font-weight: 600;
+  position: relative;
+  transition: color 0.15s ease, background 0.15s ease;
+}
+.topbar ul a::after {
+  content: "";
+  position: absolute;
+  left: 0.65em;
+  right: 0.65em;
+  bottom: 0.05em;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform 0.2s ease;
+}
+.topbar ul a:hover { color: var(--accent-strong); background: var(--accent-soft); }
+.topbar ul a.active { color: var(--accent-strong); }
+.topbar ul a.active::after { transform: scaleX(1); }
+.topbar-pdf {
+  font-weight: 700;
+  color: var(--accent);
+  text-decoration: none;
+  padding: 0.25em 0.65em;
+  border: 1px solid color-mix(in srgb, var(--accent) 40%, transparent);
+  border-radius: 6px;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+.topbar-pdf:hover { background: var(--accent-soft); color: var(--accent-strong); }
 
 /* ---------- Hamburger nav ---------- */
 .nav-toggle {
@@ -534,7 +616,7 @@ footer {
 
 /* ---------- Print ---------- */
 @media print {
-  .nav-toggle, .nav-panel, .nav-backdrop, .pdf-button { display: none !important; }
+  .topbar, .nav-toggle, .nav-panel, .nav-backdrop, .pdf-button { display: none !important; }
   body { background: #fff; color: #000; font-size: 11pt; }
   .page { max-width: none; padding: 0; }
   .reveal { opacity: 1 !important; transform: none !important; }
@@ -568,6 +650,20 @@ footer {
 </head>
 <body>
 
+<nav class="topbar" aria-label="Resume sections">
+  <a class="topbar-name" href="#top">RD</a>
+  <ul>
+    <li><a href="#profile">Profile</a></li>
+    <li><a href="#record">Record</a></li>
+    <li><a href="#builds">Builds</a></li>
+    <li><a href="#method">Method</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#technical">Technical</a></li>
+    <li><a href="#education">Education</a></li>
+  </ul>
+  <a class="topbar-pdf" href="Robin_Duchesneau_Resume_2026_AITech_v2.pdf" download>PDF ↓</a>
+</nav>
+
 <button class="nav-toggle" aria-label="Open section menu" aria-expanded="false" aria-controls="nav-panel">
   <span class="bars"></span>
 </button>
@@ -593,7 +689,7 @@ footer {
   <p class="eyebrow">Resume</p>
   <h1>Robin Duchesneau</h1>
   <p class="contact-line">
-    Pea Ridge, AR<span class="sep">·</span>(479) 866-5471<span class="sep">·</span><a href="mailto:rbndchsn@gmail.com">rbndchsn@gmail.com</a><span class="sep">·</span><a href="https://www.linkedin.com/in/robin-duchesneau" target="_blank" rel="noopener">LinkedIn</a><span class="sep">·</span>Fluent in English and French
+    Pea Ridge, AR<span class="sep">·</span><a href="https://www.linkedin.com/in/robin-duchesneau" target="_blank" rel="noopener">LinkedIn</a><span class="sep">·</span>Fluent in English and French<span class="sep">·</span>Contact details in the PDF
   </p>
   <a class="pdf-button" href="Robin_Duchesneau_Resume_2026_AITech_v2.pdf" download>
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
@@ -626,7 +722,6 @@ footer {
 
 <section id="builds">
   <h2><span class="txt">Selected Builds</span></h2>
-  <p class="builds-note">All AI-assisted up front; none rely on an LLM generating answers to users at runtime.</p>
 
   <div class="build entry">
     <h3><a href="https://compliance-saas.pages.dev/public/ghg-land" target="_blank" rel="noopener">Multi-tenant ESG compliance platform</a> <span class="badge live">Live ↗</span></h3>
@@ -635,6 +730,7 @@ footer {
 
   <div class="build entry">
     <h3><a href="https://rbndchsn.github.io/sbti-cnzs-portal/" target="_blank" rel="noopener">SBTi Corporate Net-Zero Standard V2.0 portal</a> <span class="badge live">Live ↗</span></h3>
+    <p class="builds-note">AI-assisted up front; no LLM generates answers to users at runtime.</p>
     <p>Governed Answer Retrieval: every answer traces to the clause it came from and is served verbatim. Content human-graded and approved before serving (100% human eval as the release gate); clause-level grounding makes citation accuracy deterministic. No generation surface in front of the user.</p>
   </div>
 
@@ -645,6 +741,7 @@ footer {
 
   <div class="build entry">
     <h3>DocReview — multi-agent document analysis pipeline <span class="badge private">Private</span></h3>
+    <p class="builds-note">AI-assisted up front; no LLM generates answers to users at runtime.</p>
     <p>Orchestrator with resumable state, corpus manifest, and schema versioned in Git. Seven rubric modes including asymmetric critical review against authoritative references. Every finding carries a support level (dimensional scoring: explicit / inferred / uncertain / missing), never a collapsed numeric score; uncertain or conflicting findings are routed to a verifier pass (scoped LLM-as-judge). Rubric calibrated on two documents before any corpus run.</p>
   </div>
 
@@ -775,6 +872,7 @@ footer {
   var backdrop = document.querySelector(".nav-backdrop");
   var panel = document.getElementById("nav-panel");
   var navLinks = panel.querySelectorAll("ul a");
+  var spyLinks = document.querySelectorAll(".nav-panel ul a, .topbar ul a");
 
   function setNav(open) {
     body.classList.toggle("nav-open", open);
@@ -795,16 +893,17 @@ footer {
   /* ----- Scroll-spy ----- */
   var sections = document.querySelectorAll("section[id]");
   var byId = {};
-  navLinks.forEach(function (link) {
-    byId[link.getAttribute("href").slice(1)] = link;
+  spyLinks.forEach(function (link) {
+    var id = link.getAttribute("href").slice(1);
+    (byId[id] = byId[id] || []).push(link);
   });
   var spy = new IntersectionObserver(function (entries) {
     entries.forEach(function (entry) {
-      var link = byId[entry.target.id];
-      if (!link) return;
+      var links = byId[entry.target.id];
+      if (!links) return;
       if (entry.isIntersecting) {
-        navLinks.forEach(function (l) { l.classList.remove("active"); });
-        link.classList.add("active");
+        spyLinks.forEach(function (l) { l.classList.remove("active"); });
+        links.forEach(function (l) { l.classList.add("active"); });
       }
     });
   }, { rootMargin: "-25% 0px -65% 0px" });
