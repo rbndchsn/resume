@@ -38,7 +38,9 @@ try { if (localStorage.getItem("theme") === "dark") document.documentElement.set
 </script>
 <style>
 :root {
-  --bg: #EDE8DD;
+  --bg: #DCD3BE;
+  --sheet: #EDE8DD;
+  --sheet-shadow: 0 0 48px rgba(75, 62, 38, 0.22);
   --surface: #FAF7F0;
   --surface-alt: #F3EDE1;
   --text: #2B2A27;
@@ -55,9 +57,11 @@ try { if (localStorage.getItem("theme") === "dark") document.documentElement.set
   color-scheme: light;
 }
 :root[data-theme="dark"] {
-    --bg: #161513;
+    --bg: #0E0D0C;
+    --sheet: #1A1916;
+    --sheet-shadow: 0 0 48px rgba(0, 0, 0, 0.65);
     --surface: #242320;
-    --surface-alt: #1D1C19;
+    --surface-alt: #1E1D1A;
     --text: #E9E5DC;
     --muted: #A6A094;
     --accent: #3FBDAE;
@@ -87,7 +91,9 @@ body {
 .page {
   max-width: 800px;
   margin: 0 auto;
-  padding: 5.2rem 20px 4rem;
+  padding: 5.2rem 24px 4rem;
+  background: var(--sheet);
+  box-shadow: var(--sheet-shadow);
   counter-reset: sec;
 }
 @media (max-width: 759px) {
@@ -191,7 +197,7 @@ section {
   margin-top: 1.6rem;
   padding: 1.1rem 1.2rem 1.15rem 1.25rem;
   background: var(--surface);
-  border: 1px solid var(--rule);
+  border: 1px solid color-mix(in srgb, var(--rule) 60%, transparent);
   border-left: 3px solid transparent;
   border-radius: 10px;
   transition: border-color 0.18s ease, box-shadow 0.18s ease;
@@ -550,7 +556,7 @@ footer {
 @media print {
   .topbar, .pdf-button, .theme-toggle { display: none !important; }
   body { background: #fff; color: #000; font-size: 11pt; }
-  .page { max-width: none; padding: 0; }
+  .page { max-width: none; padding: 0; background: #fff; box-shadow: none; }
   .reveal { opacity: 1 !important; transform: none !important; }
   section { border: none; padding: 0; box-shadow: none; background: none; margin-top: 1.4rem; }
   section:hover { box-shadow: none; background: none; }
