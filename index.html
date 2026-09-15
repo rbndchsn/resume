@@ -145,6 +145,26 @@ a:hover {
   font-weight: 700;
   line-height: 1.15;
   margin: 0 0 0.6rem;
+  background: linear-gradient(110deg,
+    var(--text) 0%, var(--text) 26%,
+    #14B8A6 38%,
+    #38BDF8 50%,
+    #8B5CF6 62%,
+    var(--text) 74%, var(--text) 100%);
+  background-size: 260% 100%;
+  background-position: 130% 0;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: name-sheen 60s linear infinite;
+}
+@keyframes name-sheen {
+  0%   { background-position: 130% 0; }
+  4%   { background-position: -130% 0; }
+  100% { background-position: -130% 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .masthead h1 { animation: none; }
 }
 .contact-line {
   font-size: 0.92rem;
@@ -578,6 +598,8 @@ footer {
   h2::before { content: none; }
   h2::after { transform: scaleX(1); background: #999; }
   h2 .txt { background: none; color: #000; -webkit-text-fill-color: #000; }
+  .masthead h1 { background: none; color: #000; -webkit-text-fill-color: #000; animation: none; }
+  .masthead .eyebrow { animation: none; }
   .stats { border-color: #ccc; }
   .stat .num { color: #000; }
   .timeline { padding-left: 0; }
@@ -640,7 +662,8 @@ footer {
 <section id="profile">
   <h2><span class="txt">Profile</span></h2>
   <p>Twenty years turning environmental science and regulation into working systems, on every side of the field: writing the standards, certifying against them, advising the multinationals that must meet them, and now building the AI-enabled software that codifies them. Has stood up two practices from nothing and owned the quality bar for a third, led pursuit teams that won roughly $2M in engagements, and closed six-figure engagements from personal executive relationships.</p>
-  <p>Builds AI systems for regulated domains, anywhere the deliverable has to survive an auditor, a regulator, or a board. Sustainability and ESG disclosure is where the proof is live; the discipline transfers to any domain where the source of truth is a document with legal weight. Six systems shipped end to end under a repeatable method: brief, PRD with success and kill criteria, architecture, agentic build with quality control at every step, independent-model verification, and a human accountable for the final assessment. Model-agnostic by design: Claude Code, an agentic coding tool that reads the codebase, edits files, runs commands, and connects to external tools, drives the build from terminal and IDE, with a second instance overseeing the first; frontier LLMs handle extraction and judging, a different model always verifying the one that did the work; open-source models run locally (Llama via Ollama, Nomic, BERT/SBERT) where data sovereignty requires it. Builds multi-agent pipelines as products, not only as tooling: orchestrator, sub-agents, and verifier with resumable state.</p>
+  <p>Builds AI systems for regulated domains, anywhere the deliverable has to survive an auditor, a regulator, or a board. Sustainability and ESG disclosure is where the proof is live; the discipline transfers to any domain where the source of truth is a document with legal weight. Six systems shipped end to end under a repeatable method: brief, PRD with success and kill criteria, architecture, agentic build with quality control at every step, independent-model verification, and a human accountable for the final assessment.</p>
+  <p>Model-agnostic by design: Claude Code, an agentic coding tool that reads the codebase, edits files, runs commands, and connects to external tools, drives the build from terminal and IDE, with a second instance overseeing the first; frontier LLMs handle extraction and judging, a different model always verifying the one that did the work; open-source models run locally (Llama via Ollama, Nomic, BERT/SBERT) where data sovereignty requires it. Builds multi-agent pipelines as products, not only as tooling: orchestrator, sub-agents, and verifier with resumable state.</p>
 </section>
 
 <section id="record">
