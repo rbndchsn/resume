@@ -17,6 +17,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,600;0,700;1,400&family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&display=swap">
+<script>
+try { if (localStorage.getItem("theme") === "dark") document.documentElement.setAttribute("data-theme", "dark"); } catch (e) {}
+</script>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -48,10 +51,9 @@
   --rule: #E6E0D4;
   --shadow: 0 6px 20px rgba(60, 50, 30, 0.08);
   --shadow-lift: 0 10px 30px rgba(60, 50, 30, 0.12);
-  color-scheme: light dark;
+  color-scheme: light;
 }
-@media (prefers-color-scheme: dark) {
-  :root {
+:root[data-theme="dark"] {
     --bg: #1B1A18;
     --surface: #232220;
     --text: #E9E5DC;
@@ -65,7 +67,7 @@
     --rule: #3A3731;
     --shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
     --shadow-lift: 0 10px 30px rgba(0, 0, 0, 0.45);
-  }
+    color-scheme: dark;
 }
 
 * { box-sizing: border-box; }
@@ -512,6 +514,36 @@ ul > li:hover::before { transform: translateX(3px); }
 }
 .topbar-pdf:hover { background: var(--accent-soft); color: var(--accent-strong); }
 
+/* ---------- Theme toggle ---------- */
+.theme-toggle {
+  cursor: pointer;
+  font: inherit;
+  color: var(--muted);
+  background: transparent;
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  padding: 0.25em 0.55em;
+  line-height: 1.4;
+  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+.theme-toggle:hover { background: var(--accent-soft); color: var(--accent-strong); border-color: var(--accent); }
+.theme-toggle .ico-sun { display: none; }
+:root[data-theme="dark"] .theme-toggle .ico-sun { display: inline; }
+:root[data-theme="dark"] .theme-toggle .ico-moon { display: none; }
+.theme-toggle-fixed {
+  position: fixed;
+  top: 1rem;
+  right: 4.6rem;
+  z-index: 60;
+  width: 46px;
+  height: 46px;
+  border-radius: 10px;
+  background: var(--surface);
+  box-shadow: var(--shadow);
+  font-size: 1.05rem;
+}
+@media (min-width: 760px) { .theme-toggle-fixed { display: none; } }
+
 /* ---------- Hamburger nav ---------- */
 .nav-toggle {
   position: fixed;
@@ -616,7 +648,7 @@ footer {
 
 /* ---------- Print ---------- */
 @media print {
-  .topbar, .nav-toggle, .nav-panel, .nav-backdrop, .pdf-button { display: none !important; }
+  .topbar, .nav-toggle, .nav-panel, .nav-backdrop, .pdf-button, .theme-toggle { display: none !important; }
   body { background: #fff; color: #000; font-size: 11pt; }
   .page { max-width: none; padding: 0; }
   .reveal { opacity: 1 !important; transform: none !important; }
@@ -662,7 +694,10 @@ footer {
     <li><a href="#education">Education</a></li>
   </ul>
   <a class="topbar-pdf" href="Robin_Duchesneau_Resume_2026_AITech_v2.pdf" download>PDF ↓</a>
+  <button class="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode"><span class="ico-moon">☾</span><span class="ico-sun">☀</span></button>
 </nav>
+
+<button class="theme-toggle theme-toggle-fixed" aria-label="Toggle dark mode" title="Toggle dark mode"><span class="ico-moon">☾</span><span class="ico-sun">☀</span></button>
 
 <button class="nav-toggle" aria-label="Open section menu" aria-expanded="false" aria-controls="nav-panel">
   <span class="bars"></span>
@@ -866,6 +901,17 @@ footer {
   var body = document.body;
   body.classList.add("js");
   var reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  /* ----- Theme toggle ----- */
+  document.querySelectorAll(".theme-toggle").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      var root = document.documentElement;
+      var toDark = root.getAttribute("data-theme") !== "dark";
+      if (toDark) { root.setAttribute("data-theme", "dark"); }
+      else { root.removeAttribute("data-theme"); }
+      try { localStorage.setItem("theme", toDark ? "dark" : "light"); } catch (e) {}
+    });
+  });
 
   /* ----- Hamburger nav ----- */
   var toggle = document.querySelector(".nav-toggle");
