@@ -418,6 +418,7 @@ ul > li:hover::before { transform: translateX(3px); }
 }
 .badge.live { background: var(--accent-soft); color: var(--accent-strong); border: 1px solid color-mix(in srgb, var(--accent) 35%, transparent); }
 .badge.private { background: transparent; color: var(--muted); border: 1px solid var(--rule); }
+.badge.type { background: transparent; color: var(--muted); border: 1px dashed var(--rule); }
 .build .builds-note {
   font-size: 0.85rem;
   font-style: italic;
@@ -614,7 +615,7 @@ footer {
   <ul>
     <li><a href="#profile">Profile</a></li>
     <li><a href="#record">Record</a></li>
-    <li><a href="#builds">Builds</a></li>
+    <li><a href="#builds">Apps</a></li>
     <li><a href="#method">Method</a></li>
     <li><a href="#experience">Experience</a></li>
     <li><a href="#technical">Technical</a></li>
@@ -663,37 +664,37 @@ footer {
 </section>
 
 <section id="builds">
-  <h2><span class="txt">Selected Builds</span></h2>
+  <h2><span class="txt">AI-Assisted Tools, Apps &amp; Platforms</span></h2>
 
   <div class="build entry">
-    <h3><a href="https://compliance-saas.pages.dev/public/ghg-land" target="_blank" rel="noopener">Multi-tenant ESG compliance platform</a> <span class="badge live">Live ↗</span></h3>
+    <h3><a href="https://compliance-saas.pages.dev/public/ghg-land" target="_blank" rel="noopener">Multi-tenant ESG compliance platform</a> <span class="badge live">Live ↗</span> <span class="badge type">SaaS platform</span></h3>
     <p>Built to test how far AI assistance takes one practitioner from published standard to working compliance interface. Requirement registers extracted from source PDFs through a vision-transformer layout and table pipeline: IFRS S2 (1,623 requirements), CSRD (6,016), GRI, SASB, EU Taxonomy, GHG Protocol Land Sector and Removals. Extractions verified by an independent-model grounding check (precision: found / not found / mismatch / interpretation, with counts) before human QA against a set acceptance threshold. SQLite schema, REST API on Cloudflare Workers, dual-token auth, evidence object storage, React front end.</p>
   </div>
 
   <div class="build entry">
-    <h3><a href="https://rbndchsn.github.io/sbti-cnzs-portal/" target="_blank" rel="noopener">SBTi Corporate Net-Zero Standard V2.0 portal</a> <span class="badge live">Live ↗</span></h3>
+    <h3><a href="https://rbndchsn.github.io/sbti-cnzs-portal/" target="_blank" rel="noopener">SBTi Corporate Net-Zero Standard V2.0 portal</a> <span class="badge live">Live ↗</span> <span class="badge type">Web app</span></h3>
     <p class="builds-note">AI-assisted up front; no LLM generates answers to users at runtime.</p>
     <p>Governed Answer Retrieval: every answer traces to the clause it came from and is served verbatim. Content human-graded and approved before serving (100% human eval as the release gate); clause-level grounding makes citation accuracy deterministic. No generation surface in front of the user.</p>
   </div>
 
   <div class="build entry">
-    <h3><a href="https://rbndchsn.github.io/sb_portal/" target="_blank" rel="noopener">California SB 54 Compliance Navigator</a> <span class="badge live">Live ↗</span></h3>
+    <h3><a href="https://rbndchsn.github.io/sb_portal/" target="_blank" rel="noopener">California SB 54 Compliance Navigator</a> <span class="badge live">Live ↗</span> <span class="badge type">Web app</span></h3>
     <p>Statute and regulations classified into a structured requirement register. Python content factory, generated JSON, deploy gated on deterministic validation checks (schema and content graders) so a failed check leaves the last good version serving.</p>
   </div>
 
   <div class="build entry">
-    <h3>DocReview: multi-agent document analysis pipeline <span class="badge private">Private</span></h3>
+    <h3>DocReview: multi-agent document analysis pipeline <span class="badge private">Private</span> <span class="badge type">AI agent pipeline</span></h3>
     <p class="builds-note">AI-assisted up front; no LLM generates answers to users at runtime.</p>
     <p>Orchestrator with resumable state, corpus manifest, and schema versioned in Git. Seven rubric modes including asymmetric critical review against authoritative references. Every finding carries a support level (dimensional scoring: explicit / inferred / uncertain / missing), never a collapsed numeric score; uncertain or conflicting findings are routed to a verifier pass (scoped LLM-as-judge). Rubric calibrated on two documents before any corpus run.</p>
   </div>
 
   <div class="build entry">
-    <h3>Second Brain: local-first agentic RAG for technical standards <span class="badge private">Private</span></h3>
+    <h3>Second Brain: local-first agentic RAG for technical standards <span class="badge private">Private</span> <span class="badge type">Local AI tool</span></h3>
     <p>Dual-path retrieval (semantic plus keyword/metadata) with transparency on completeness (the user always knows whether they saw 5 of 5 or 5 of 500) and a keyword-only mode that gives recall by construction when exhaustiveness is required. Eval criteria set in the PRD before build: 100% recall on metadata-filter queries, top-5 semantic relevance ≥80% on a test query set, zero fabricated citations. Trust boundary between deterministic extraction metadata and LLM enrichment; dual-write storage with rollback; consent gate before any outbound call. Delivered from a <a href="https://github.com/bmad-code-org/bmad-method" target="_blank" rel="noopener">BMAD</a> PRD with SMART success criteria, kill/pivot triggers, and a traceability matrix.</p>
   </div>
 
   <div class="build entry">
-    <h3><a href="https://3d-chess.com/" target="_blank" rel="noopener">Star Trek Tri-Dimensional Chess</a> <span class="badge live">Live ↗</span></h3>
+    <h3><a href="https://3d-chess.com/" target="_blank" rel="noopener">Star Trek Tri-Dimensional Chess</a> <span class="badge live">Live ↗</span> <span class="badge type">Browser game</span></h3>
     <p>Outside the domain, to prove the method travels. Full FRS5 rules engine as pure TypeScript with engine/rendering separation; 3D WebGL board; in-browser alpha-beta/PVS opponent with transposition table and quiescence, running in a Web Worker. Evals built against a reference implementation adopted as oracle (gold-standard ground truth): replay of the annotated sample game (recall: every legal move accepted) plus per-position differential checks submitting every generated move to the validator (precision: no over-generation), run as a regression eval suite; deviations from the reference documented and cited.</p>
   </div>
 </section>
