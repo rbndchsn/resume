@@ -118,12 +118,26 @@ a:hover {
 
 /* ---------- Header ---------- */
 .masthead .eyebrow {
+  display: inline-block;
   font-size: 0.78rem;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.18em;
   color: var(--accent);
   margin: 0 0 0.5rem;
+  transform-origin: left center;
+  animation: heartbeat 1.8s ease-in-out infinite;
+}
+@keyframes heartbeat {
+  0%   { transform: scale(1); }
+  12%  { transform: scale(1.14); }
+  24%  { transform: scale(1); }
+  36%  { transform: scale(1.14); }
+  48%  { transform: scale(1); }
+  100% { transform: scale(1); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .masthead .eyebrow { animation: none; }
 }
 .masthead h1 {
   font-family: "Source Serif 4", Georgia, serif;
