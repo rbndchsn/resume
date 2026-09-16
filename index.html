@@ -97,7 +97,7 @@ body {
 .page {
   max-width: 800px;
   margin: 0 auto;
-  padding: 5.2rem 24px 4rem;
+  padding: 2rem 24px 4rem;
   background: var(--sheet);
   box-shadow: var(--sheet-shadow);
   counter-reset: sec;
@@ -106,7 +106,7 @@ body {
   .topbar { font-size: 0.8rem; gap: 0.5rem; padding: 0.45rem 0.6rem; }
   .topbar ul { gap: 0; }
   .topbar ul a { padding: 0.25em 0.4em; }
-  .page { padding-top: 6.2rem; }
+  section { scroll-margin-top: 7.5rem; }
 }
 
 /* ---------- Links ---------- */
@@ -464,10 +464,8 @@ ul > li:hover::before { transform: translateX(3px); }
 
 /* ---------- Top bar (desktop) ---------- */
 .topbar {
-  position: fixed;
+  position: sticky;
   top: 0;
-  left: 0;
-  right: 0;
   z-index: 60;
   display: flex;
   flex-wrap: wrap;
@@ -590,7 +588,6 @@ footer {
 }
 
 @media (max-width: 480px) {
-  .page { padding-top: 2rem; }
   section { padding-left: 0.9rem; padding-right: 0.7rem; }
   .masthead { padding-right: 3.2rem; }
   .timeline { padding-left: 1.5rem; }
